@@ -7,6 +7,7 @@ var year;
 var quoteNumber; //Variable that holds the randomly generated index number to select the quote
 var quoteHTML;
 var rgbColour;
+var timer;
 
 // Generates a random number between 0 and 255 for RGB
 function randomNumber() {
@@ -24,7 +25,12 @@ function randomColour() {
 //Starts a 30 second timeout
 function startTimer(func) {
     "use strict";
-    window.setTimeout(func, 30000);
+    timer = window.setTimeout(func, 30000);
+}
+
+function clearTimer() {
+    "use strict";
+    window.clearTimeout(timer);
 }
 
 //Generates a random quote from the quotes array that is piped into the function
@@ -64,6 +70,7 @@ function printQuote() {
         year = quoteObj.year;
         quoteHTML += '<span class="year">' + year + '</span>' + '</p>';
     }
+    //Checks if any tags are available and then adds them to the quote
     if (quoteObj.tags !== undefined) {
         quoteHTML += '<p> <span class="tags">Categories: ' + quoteObj.tags.join(', ') + '</span>' + '</p>';
     }
@@ -76,4 +83,5 @@ function printQuote() {
 
 // event listener to respond to "Show another quote" button clicks
 // when user clicks anywhere on the button, the "printQuote" function is called
+document.getElementById('loadQuote').addEventListener("click", clearTimer, false);
 document.getElementById('loadQuote').addEventListener("click", printQuote, false);
